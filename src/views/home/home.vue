@@ -15,6 +15,26 @@
 <script setup>
 import HomeNavBar from "./cpns/home-nav-bar.vue"
 import HomeSearchBox from "./cpns/home-search-box.vue"
+import useHomeStore from '@/stores/modules/home';
+// const hotSuggests = ref([])
+// knRequest.get({
+//   url:'/home/hotSuggests'
+// }).then(res => {
+//   hotSuggests.value = res.data
+//   console.log(res );
+// })
+// const categories = ref([])
+// knRequest.get({
+//   url:'/home/categories'
+// }).then(res => {
+//   categories.value = res.data
+//   console.log(res );
+// })
+const homeStore = useHomeStore()
+homeStore.fetchHotSuggestDate()
+
+
+
 </script>
 
 <style lang="less" scoped>

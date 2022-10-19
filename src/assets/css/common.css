@@ -17,3 +17,7 @@ body {
   background-color: #fff;
   overflow-y: auto;
 }
+
+.bottom-grey-line{
+  border-bottom:1px solid #f2f2f2
+}
