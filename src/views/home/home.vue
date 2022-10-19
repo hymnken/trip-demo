@@ -7,6 +7,8 @@
     </div>
     <!-- location -->
     <HomeSearchBox />
+
+    
   </div>
 </template>
 
