@@ -7,14 +7,17 @@
     </div>
     <!-- location -->
     <HomeSearchBox />
-
-    
+    <HomeCategories />
+    <HomeContent />
+    <button @click="moreBtn">jiazaigengduo</button>
   </div>
 </template>
 
 <script setup>
 import HomeNavBar from "./cpns/home-nav-bar.vue"
 import HomeSearchBox from "./cpns/home-search-box.vue"
+import HomeCategories from "./cpns/home-categories.vue"
+import HomeContent from "./cpns/home-content.vue"
 import useHomeStore from '@/stores/modules/home';
 // const hotSuggests = ref([])
 // knRequest.get({
@@ -32,8 +35,14 @@ import useHomeStore from '@/stores/modules/home';
 // })
 const homeStore = useHomeStore()
 homeStore.fetchHotSuggestDate()
+homeStore.fetchCategoriesData()
+// let currentPage = 1
+homeStore.fetchHouselistData()
 
-
+const moreBtn = () =>{
+  // currentPage++
+  homeStore.fetchHouselistData()
+}
 
 </script>
 

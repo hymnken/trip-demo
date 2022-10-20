@@ -43,6 +43,12 @@
       </template>
     </div>
 
+    <!-- 开始搜索 -->
+    <div class="section search-btn">
+      <div class="btn" @click="searchBtn">
+        开始搜索
+      </div>
+    </div>
   </div>
 </template>
 
@@ -86,9 +92,6 @@ const { currentCity } = storeToRefs(cityStore)
 const nowDate = new Date()
 const newDate = new Date()
 newDate.setDate(nowDate.getDate() + 1)
-
-
-
 const startDate = ref(formatMonthDay(nowDate))
 const endDate = ref(formatMonthDay(newDate))
 const stayCount = ref(getDiffDays(nowDate, newDate))
@@ -105,14 +108,28 @@ const onConfirm = (value) => {
   showCalendar.value = false
 }
 
-//热门建议
+// 热门建议
 const homeStore = useHomeStore()
 const {hotSuggests} =storeToRefs(homeStore)
+
+// 搜索按钮
+const searchBtn = () =>{
+  router.push({
+    path:'/search',
+    query:{
+      startDate:startDate.value,
+      endDate:endDate.value,
+      currentCity:currentCity.value.cityName
+    }
+  })
+}
+
 </script>
 
 <style lang="less" scoped>
 .search-box {
   --van-calendar-popup-height: 100%;
+
 }
 
 .location {
@@ -204,12 +221,28 @@ const {hotSuggests} =storeToRefs(homeStore)
 
 .hot-suggests{
   margin:10px 0;
+  height: auto;
   .item{
     padding:4px 8px;
     border-radius: 14px;
     margin:4px 4px;
     font-size: 12px;
     line-height: 1;
+  }
+}
+
+.search-btn{
+  .btn{
+    width: 342px;
+    height: 38px;
+    max-height: 50px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    background-image: var(--theme-linear-gradient);
   }
 }
 </style>
