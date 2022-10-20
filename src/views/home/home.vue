@@ -9,7 +9,6 @@
     <HomeSearchBox />
     <HomeCategories />
     <HomeContent />
-    <button @click="moreBtn">jiazaigengduo</button>
   </div>
 </template>
 
