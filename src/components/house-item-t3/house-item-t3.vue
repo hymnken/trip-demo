@@ -63,7 +63,7 @@ defineProps({
       }
 
       .text {
-        margin-left: 2px;
+        margin-left: 3px;
         font-size: 12px;
         color: #666;
       }
@@ -88,7 +88,7 @@ defineProps({
       margin: 8px 0;
       .new {
         color: #ff9645;
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .old {

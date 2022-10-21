@@ -54,10 +54,12 @@ const itemScore = computed(() => {
       padding: 8px 10px;
 
       .summary {
+        color: #fff;
         font-size: 12px;
       }
 
       .name {
+        color: #fff;
         margin: 5px 0;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -70,6 +72,10 @@ const itemScore = computed(() => {
         display: flex;
         justify-content: space-between;
         margin-top: 10px;
+      }
+      .new {
+        color: #ff9645;
+        font-size: 13px;
       }
     }
 

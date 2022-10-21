@@ -8,6 +8,9 @@
     <!-- location -->
     <HomeSearchBox />
     <HomeCategories />
+
+    <div class="search-bar" v-if="isShowSearchBar"><h2>我是搜索框</h2></div>
+
     <HomeContent />
   </div>
 </template>
@@ -18,6 +21,8 @@ import HomeSearchBox from "./cpns/home-search-box.vue"
 import HomeCategories from "./cpns/home-categories.vue"
 import HomeContent from "./cpns/home-content.vue"
 import useHomeStore from '@/stores/modules/home';
+import useScroll from "@/hooks/useScroll";
+import { computed, ref, watch } from "vue";
 // const hotSuggests = ref([])
 // knRequest.get({
 //   url:'/home/hotSuggests'
@@ -38,14 +43,41 @@ homeStore.fetchCategoriesData()
 // let currentPage = 1
 homeStore.fetchHouselistData()
 
-const moreBtn = () =>{
-  // currentPage++
-  homeStore.fetchHouselistData()
-}
+// const moreBtn = () =>{
+//   // currentPage++
+//   homeStore.fetchHouselistData()
+// }
+// 加载更多
+// useScroll(() => {
+//   homeStore.fetchHouselistData()
+// })
 
+// 二：
+const { isReachBottom,scrollTop } = useScroll()
+watch(isReachBottom,(newValue) => {
+  if(newValue){
+    homeStore.fetchHouselistData().then(() => {
+      isReachBottom.value = false
+    })
+  }
+})
+
+// 控制搜索框显示
+// const isShowSearchBar = ref(false)
+// watch(scrollTop,(newTop) => {
+//   console.log(newTop);
+//   isShowSearchBar.value = newTop > 100
+// })
+// 另外一种简洁的写法 而且有缓存 不用频繁调
+const isShowSearchBar = computed(() => {
+  return scrollTop.value >= 100
+})
 </script>
 
 <style lang="less" scoped>
+.home{
+  padding-bottom: 60px;
+}
 .banner {
   img {
     width: 100%;
