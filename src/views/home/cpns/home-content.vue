@@ -4,8 +4,10 @@
     <div class="list">
       <template v-for="(item,index) in houselist" :key="item.data.houseId">
         <!-- <h3>{{item.data.houseName}}</h3> -->
-        <HouseItemT9 v-if="item.discoveryContentType === 9" :item-data="item.data" />
-        <HouseItemT3 v-else-if="item.discoveryContentType === 3" :item-data="item.data" />
+        <HouseItemT9 v-if="item.discoveryContentType === 9" 
+        :item-data="item.data" @click="itemClick(item.data)" />
+        <HouseItemT3 v-else-if="item.discoveryContentType === 3" 
+        :item-data="item.data" @click="itemClick(item.data)" />
       </template>
     </div>
   </div>
@@ -16,8 +18,14 @@ import useHomeStore from '@/stores/modules/home';
 import { storeToRefs } from 'pinia';
 import HouseItemT3 from '@/components/house-item-t3/house-item-t3.vue'
 import HouseItemT9 from '@/components/house-item-t9/house-item-t9.vue'
+import router from '@/router';
 const homeStore = useHomeStore()
 const { houselist } = storeToRefs(homeStore)
+
+const itemClick = (item) => {
+  // console.log(item.houseId);
+  router.push('/detail/' + item.houseId)
+}
 
 </script>
 

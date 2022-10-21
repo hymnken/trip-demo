@@ -1,5 +1,8 @@
 <template>
-  <div class="loading">
+  <div class="loading" 
+   v-if="mainStore.isLoading"
+   @click="loadingClick"
+   >
     <div class="bg">
       <img src="@/assets/img/home/full-screen-loading.gif" alt="">
     </div>
@@ -7,7 +10,12 @@
 </template>
 
 <script setup>
+import useMainStore from '@/stores/modules/main';
 
+const mainStore = useMainStore()
+const loadingClick = () => {
+  mainStore.isLoading = false
+}
 </script>
 
 <style lang="less" scoped>
@@ -21,7 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, .2);
 
   .bg{
     justify-content: center;
