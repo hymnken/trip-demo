@@ -9,7 +9,9 @@
     <HomeSearchBox />
     <HomeCategories />
 
-    <div class="search-bar" v-if="isShowSearchBar"><h2>我是搜索框</h2></div>
+    <div class="search-bar" v-if="isShowSearchBar">
+      <SearchBar :start-date="'09.20'" :end-date="'09.21'" />
+    </div>
 
     <HomeContent />
   </div>
@@ -23,6 +25,7 @@ import HomeContent from "./cpns/home-content.vue"
 import useHomeStore from '@/stores/modules/home';
 import useScroll from "@/hooks/useScroll";
 import { computed, ref, watch } from "vue";
+import SearchBar from "@/components/search-bar.vue/search-bar.vue";
 // const hotSuggests = ref([])
 // knRequest.get({
 //   url:'/home/hotSuggests'
@@ -53,9 +56,9 @@ homeStore.fetchHouselistData()
 // })
 
 // 二：
-const { isReachBottom,scrollTop } = useScroll()
-watch(isReachBottom,(newValue) => {
-  if(newValue){
+const { isReachBottom, scrollTop } = useScroll()
+watch(isReachBottom, (newValue) => {
+  if (newValue) {
     homeStore.fetchHouselistData().then(() => {
       isReachBottom.value = false
     })
@@ -70,18 +73,30 @@ watch(isReachBottom,(newValue) => {
 // })
 // 另外一种简洁的写法 而且有缓存 不用频繁调
 const isShowSearchBar = computed(() => {
-  return scrollTop.value >= 100
+  return scrollTop.value >= 360
 })
 </script>
 
 <style lang="less" scoped>
-.home{
+.home {
   padding-bottom: 60px;
-}
-.banner {
-  img {
-    width: 100%;
+
+  .banner {
+    img {
+      width: 100%;
+    }
+
+  }
+
+  .search-bar {
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    padding: 16px 16px 10px;
+    background-color: #fff;
   }
 }
-
 </style>
