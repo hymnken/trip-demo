@@ -10,7 +10,12 @@
         <!-- <div class="indicator">{{ active }} / {{ total }}</div> -->
         <div class="indicator">
           <template v-for="(value,key,index) in swipeGroup" :key="key">
-            <span class="item">{{getTitle(value[0].title)}}</span>
+            <span class="item" :class="{ active: swipeData[active]?.enumPictureCategory == key}">
+              <span class="text">{{ getTitle(value[0].title) }}</span>
+              <span class="count" v-if="swipeData[active]?.enumPictureCategory == key">
+                {{ getCategoryIndex(swipeData[active]) }} / {{value.length}}
+              </span>
+            </span>
           </template>
         </div>
       </template>
@@ -40,7 +45,7 @@ const swipeGroup = {}
 
 // 二
 
-for(const item of props.swipeData) {
+for (const item of props.swipeData) {
   swipeGroup[item.enumPictureCategory] = []
 }
 for (const item of props.swipeData) {
@@ -54,6 +59,11 @@ const getTitle = (title) => {
   // return title.replace('：','').replace('【','').replace('】','')
   const results = titleReg.exec(title)
   return results[1]
+}
+
+const getCategoryIndex = (item) => {
+  const valueArray = swipeGroup[item.enumPictureCategory]
+  return valueArray.findIndex(data => data === item) + 1 
 }
 </script>
 
@@ -71,8 +81,13 @@ const getTitle = (title) => {
       font-size: 12px;
       background: rgba(0, 0, 0, 0.8);
       .item {
-        
         margin: 0 3px;
+        &.active {
+          padding: 0 3px;
+          border-radius: 5px;
+          background-color: #fff;
+          color: #333;
+        }
       }
     }
 
