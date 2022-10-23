@@ -4,11 +4,13 @@
       <h2 class="title">{{ title }}</h2>
     </div>
     <div class="content">
+      <!-- 插槽 -->
       <slot>
         <h3>默认内容</h3>
       </slot>
+
     </div>
-    <div class="footer">
+    <div class="footer" v-if="moreText.length">
       <span class="more">{{ moreText }}</span>
       <van-icon name="arrow" />
     </div>
@@ -23,7 +25,7 @@ defineProps({
   },
   moreText:{
     type:String,
-    default:'查看全部'
+    default:''
   }
 })
 </script>

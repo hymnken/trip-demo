@@ -2,13 +2,16 @@
   <div class="detail hide-tabbar">
     <!-- 导航栏 -->
     <van-nav-bar title="房屋详情" left-text="返回首页" left-arrow @click-left="onClickLeft" />
-    <!--  轮播图组件 -->
+    
     <div class="main" v-if="mainPart">
       <DetailSwipe :swipe-data="mainPart.topModule?.housePicture.housePics" />
       <DetailInfos />
+      <DetailFacility />
+      <DetailLandLord />
+      <DetailComment />
+      <DetailNotice />
+      <DetailMap />
     </div>
-
-    <DetailFacility />
   </div>
 </template>
 
@@ -18,14 +21,19 @@ import useDetailStore from "@/stores/modules/detail";
 import { storeToRefs } from 'pinia';
 import DetailSwipe from "./cpns/detail-swipe.vue";
 import DetailInfos from "./cpns/detail-infos.vue";
-import DetailFacility from './cpns/detail-facility.vue'
+import DetailFacility from './cpns/detail-facility.vue';
+import DetailLandLord from "./cpns/detail.landlord.vue";
+import DetailComment from "./cpns/detail-comment.vue";
+import DetailNotice from "./cpns/detail-notice.vue";
+import DetailMap from "./cpns/detail-map.vue";
+
+
 const router = useRouter()
 const route = useRoute()
 
 const onClickLeft = () => {
   router.back()
 }
-
 const detailStore = useDetailStore()
 detailStore.houseId = route.params.id
 detailStore.fetchDetailData()
