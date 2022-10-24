@@ -52,7 +52,6 @@ for (const item of props.swipeData) {
   const valueArray = swipeGroup[item.enumPictureCategory]
   valueArray.push(item)
 }
-console.log(swipeGroup);
 
 const titleReg = /【(.*?)】/i
 const getTitle = (title) => {

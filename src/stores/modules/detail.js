@@ -10,7 +10,10 @@ const useDetailStore = defineStore('detail',{
     landlord:{},
     comment:{},
     orderRules:[],
-    position:{}
+    position:{},
+    longitude:null,
+    latitude:null,
+    priceIntro:{}
   }),
   actions:{
     async fetchDetailData() {
@@ -23,7 +26,10 @@ const useDetailStore = defineStore('detail',{
       this.comment = this.mainPart.dynamicModule.commentModule
       this.orderRules = this.mainPart.dynamicModule.rulesModule.orderRules
       this.position = this.detailInfos.mainPart.dynamicModule.positionModule
-      console.log(this.position.longitude);
+      // console.log(this.position.longitude);
+      this.longitude = this.position.longitude
+      this.latitude = this.position.latitude
+      this.priceIntro = this.mainPart.introductionModule
     }
   }
 })
