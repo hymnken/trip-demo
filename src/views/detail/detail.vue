@@ -1,20 +1,21 @@
 <template>
   <div class="detail hide-tabbar" ref="detailRef">
-    <TabControl :titles="['adsa','fdf','yuy','hgg']"
-    v-if="showTabControl"
-    class="tabs"
+    <TabControl :titles="titles" v-if="showTabControl" 
+    class="tabs" 
+    @tabItemClick="tabClick" 
+    ref="tabControlRef"
     />
     <!-- 导航栏 -->
     <van-nav-bar title="房屋详情" left-text="返回首页" left-arrow @click-left="onClickLeft" />
-    
-    <div class="main" v-if="mainPart">
+
+    <div class="main" v-if="mainPart" v-memo="[mainPart]">
       <DetailSwipe :swipe-data="mainPart.topModule?.housePicture.housePics" />
-      <DetailInfos />
-      <DetailFacility />
-      <DetailLandLord />
-      <DetailComment />
-      <DetailNotice />
-      <DetailMap />
+      <DetailInfos name="描述" :ref="getSectionRef" />
+      <DetailFacility name="设施" :ref="getSectionRef" />
+      <DetailLandLord name="房东" :ref="getSectionRef" />
+      <DetailComment name="评论" :ref="getSectionRef" />
+      <DetailNotice name="须知" :ref="getSectionRef" />
+      <DetailMap name="地图" :ref="getSectionRef" />
       <DetailIntroduce />
     </div>
 
@@ -38,7 +39,7 @@ import DetailComment from "./cpns/detail-comment.vue";
 import DetailNotice from "./cpns/detail-notice.vue";
 import DetailMap from "./cpns/detail-map.vue";
 import DetailIntroduce from "./cpns/detail-introduce.vue";
-import { computed,ref } from "vue";
+import { computed, ref, watch } from "vue";
 import useScroll from "@/hooks/useScroll";
 
 const router = useRouter()
@@ -55,11 +56,74 @@ const { mainPart } = storeToRefs(detailStore)
 
 // tab-control
 const detailRef = ref()
-const { scrollTop } =useScroll(detailRef)
+const { scrollTop } = useScroll(detailRef)
 const showTabControl = computed(() => {
-  return scrollTop.value > 300 
+  return scrollTop.value > 300
 })
 
+
+// const landlordRef = ref()
+// const sectionEls = []
+// const getSectionRef = (value) => {
+//   sectionEls.push(value.$el)
+// }
+
+// 二
+const sectionEls = ref({})
+const titles = computed(() => {
+  return Object.keys(sectionEls.value)
+})
+
+const getSectionRef = (value) => {
+  // sectionEls.push(value.$el)
+  if (!value) return
+  const name = value.$el.getAttribute("name")
+  sectionEls.value[name] = value.$el
+}
+// const getSectionRef = (value) => {
+//   sectionEls.push(value.$el)
+// }
+
+let isClick = false
+let currentDistance = -1
+const tabClick = (index) => {
+  // console.log('----------');
+  const key = Object.keys(sectionEls.value)[index]
+  const el = sectionEls.value[key]
+  let distance = el.offsetTop
+  if (index !== 0) {
+    distance = distance - 44
+  }
+
+  isClick = true
+  currentDistance = distance
+
+  detailRef.value.scrollTo({
+    // $el 拿到根元素
+    top: instance,
+    behavior: 'smooth'
+  })
+}
+
+// 页面滚动时 匹配相应的tab
+const tabControlRef = ref()
+watch(scrollTop, (newValue) => {
+  // 获取所有offsetTop 放到数组中
+  if (newValue === currentDistance) {
+    isClick = false
+  }
+  if (isClick) return
+  const els = Object.values(sectionEls.value)
+  const values = els.map(el => el.offsetTop)
+  let index = values.length - 1
+  for (let i = 0; i < values.length; i++){
+    if(values[i] >= newValue + 44){
+      index = i - 1
+      break
+    }
+  }
+  tabControlRef.value?.setCurrentIndex(index)
+})
 </script>
 
 <style lang="less" scoped>
