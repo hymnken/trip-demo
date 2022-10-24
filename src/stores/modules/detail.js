@@ -19,7 +19,7 @@ const useDetailStore = defineStore('detail',{
     async fetchDetailData() {
       const res = await getDetailInfos(this.houseId)
       this.detailInfos = res.data
-      this.mainPart = this.detailInfos.mainPart
+      this.mainPart = this.detailInfos?.mainPart
       this.topInfos = this.mainPart.topModule
       this.houseFacility = this.mainPart.dynamicModule.facilityModule.houseFacility
       this.landlord = this.mainPart.dynamicModule.landlordModule

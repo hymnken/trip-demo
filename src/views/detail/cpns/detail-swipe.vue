@@ -6,14 +6,18 @@
           <img :src="item.url" alt="">
         </van-swipe-item>
       </template>
-      <template #indicator="{active,total}">
-        <!-- <div class="indicator">{{ active }} / {{ total }}</div> -->
+
+      <template #indicator="{ active, total }">
+        <!-- <div class="indicator">{{ active }}/{{ swipeData.length }}-{{ total }}</div> -->
         <div class="indicator">
-          <template v-for="(value,key,index) in swipeGroup" :key="key">
-            <span class="item" :class="{ active: swipeData[active]?.enumPictureCategory == key}">
-              <span class="text">{{ getTitle(value[0].title) }}</span>
+          <template v-for="(value, key, index) in swipeGroup" :key="key">
+            <span 
+              class="item" 
+              :class="{ active: swipeData[active]?.enumPictureCategory == key }"
+            >
+              <span class="text">{{ getName(value[0].title) }}</span>
               <span class="count" v-if="swipeData[active]?.enumPictureCategory == key">
-                {{ getCategoryIndex(swipeData[active]) }} / {{value.length}}
+                {{ getCategoryIndex(swipeData[active]) }}/{{ value.length }}
               </span>
             </span>
           </template>
@@ -54,7 +58,7 @@ for (const item of props.swipeData) {
 }
 
 const titleReg = /【(.*?)】/i
-const getTitle = (title) => {
+const getName = (title) => {
   // return title.replace('：','').replace('【','').replace('】','')
   const results = titleReg.exec(title)
   return results[1]

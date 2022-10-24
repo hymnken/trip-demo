@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" ref="homeRef">
     <HomeNavBar />
     <!-- pic -->
     <div class="banner">
@@ -17,6 +17,13 @@
   </div>
 </template>
 
+
+<script>
+export default {
+  name:'home'
+}
+</script>
+
 <script setup>
 import HomeNavBar from "./cpns/home-nav-bar.vue"
 import HomeSearchBox from "./cpns/home-search-box.vue"
@@ -24,7 +31,7 @@ import HomeCategories from "./cpns/home-categories.vue"
 import HomeContent from "./cpns/home-content.vue"
 import useHomeStore from '@/stores/modules/home';
 import useScroll from "@/hooks/useScroll";
-import { computed, ref, watch } from "vue";
+import { computed, onActivated, ref, watch } from "vue";
 import SearchBar from "@/components/search-bar.vue/search-bar.vue";
 // const hotSuggests = ref([])
 // knRequest.get({
@@ -56,7 +63,8 @@ homeStore.fetchHouselistData()
 // })
 
 // 二：
-const { isReachBottom, scrollTop } = useScroll()
+const homeRef = ref()
+const { isReachBottom, scrollTop } = useScroll(homeRef)
 watch(isReachBottom, (newValue) => {
   if (newValue) {
     homeStore.fetchHouselistData().then(() => {
@@ -75,11 +83,21 @@ watch(isReachBottom, (newValue) => {
 const isShowSearchBar = computed(() => {
   return scrollTop.value >= 360
 })
+//- onActivated(): 被包含在`<keep-alive>`中的组件，
+  // 会多出两个生命周期钩子函数。被激活时执行。
+onActivated(() => {
+  homeRef.value?.scrollTo({
+    top:scrollTop.value
+  })
+})
 </script>
 
 <style lang="less" scoped>
 .home {
   padding-bottom: 60px;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
 
   .banner {
     img {

@@ -14,5 +14,4 @@ useScroll(favorRef)
 </script>
 
 <style lang="less" scoped>
-
 </style>

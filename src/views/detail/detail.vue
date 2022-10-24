@@ -100,7 +100,7 @@ const tabClick = (index) => {
 
   detailRef.value.scrollTo({
     // $el 拿到根元素
-    top: instance,
+    top: distance,
     behavior: 'smooth'
   })
 }
