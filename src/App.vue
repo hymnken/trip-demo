@@ -9,14 +9,11 @@ const route = useRoute()
   <div class="app">
     
     <router-view v-slot="props">
-      <keep-alive includes="home">
+      <keep-alive include="home">
         <component :is="props.Component"></component>
       </keep-alive>
     </router-view>
-
-
-
-    <TabBar v-if="!route.meta.hideTabBar" />
+    <TabBar v-show="!route.meta.hideTabBar" />
     <Loading />
   </div>
 </template>

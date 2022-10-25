@@ -38,6 +38,7 @@ import { watch } from "vue";
 import { useRoute } from "vue-router";
 const currentIndex = ref(0)
 const route = useRoute()
+
 watch(route,(newRoute) => {
   const index = tabbarData.findIndex(item => item.path === newRoute.path)
   if (index=== -1 ) return 

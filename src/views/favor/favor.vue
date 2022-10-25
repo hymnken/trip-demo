@@ -14,4 +14,8 @@ useScroll(favorRef)
 </script>
 
 <style lang="less" scoped>
+.favor{
+  height: 300px;
+  background-color: orange;
+}
 </style>

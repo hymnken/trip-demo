@@ -8,16 +8,12 @@
     <!-- location -->
     <HomeSearchBox />
     <HomeCategories />
-
     <div class="search-bar" v-if="isShowSearchBar">
       <SearchBar :start-date="'09.20'" :end-date="'09.21'" />
     </div>
-
     <HomeContent />
   </div>
 </template>
-
-
 <script>
 export default {
   name:'home'
@@ -103,9 +99,7 @@ onActivated(() => {
     img {
       width: 100%;
     }
-
   }
-
   .search-bar {
     position: fixed;
     z-index: 9;
